@@ -9,9 +9,6 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Env files
-.env
-
 # Build
 dist/
 build/
