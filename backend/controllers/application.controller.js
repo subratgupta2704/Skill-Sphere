@@ -38,7 +38,7 @@ export const applyJob = async (req, res) => {
       applicant: userId,
     });
 
-    job.applicant.push(newApplication._id);
+    job.applications.push(newApplication._id);
     await job.save();
     return res.status(201).json({
       message: "Application submitted successfully",
@@ -87,7 +87,7 @@ export const getApplicants = async (req, res) => {
   try {
     const jobId = req.params.id;
     const job = await Job.findById(jobId).populate({
-      path: "applicants",
+      path: "applications",
       options: { sort: { createdAt: -1 } },
       populate: {
         path: "applicant",
