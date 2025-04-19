@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/shared/Navbar";
 import { Label } from "../components/ui/Label";
 import { Input } from "../components/ui/Input";
-import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
+import { RadioGroup } from "../components/ui/radio-group";
 import { Button } from "../components/ui/Button";
 import { Link } from "react-router-dom";
 
