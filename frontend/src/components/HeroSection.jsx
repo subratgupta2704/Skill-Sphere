@@ -12,7 +12,7 @@ const HeroSection = () => {
         </span>
         <h1 className="text-5xl font-bold">
           Search, Apply & <br />
-          Get your<span className="text-[#6A38C2]">Dream Jobs</span>
+          Get your <span className="text-[#6A38C2]">Dream Jobs</span>
         </h1>
         <p>
           Whether you're just starting out or looking for your next big move —
