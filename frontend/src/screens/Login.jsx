@@ -12,6 +12,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
 import { setLoading } from "../redux/authSlice";
+import { setUser } from "../redux/authSlice";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -39,6 +40,7 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");
       } else {
@@ -46,7 +48,6 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error while logging in user", error);
-      toast.error(error.response.data.message);
     } finally {
       dispatch(setLoading(false));
     }
@@ -75,7 +76,7 @@ const Login = () => {
             <Label className="mb-2 block">Password</Label>
             <Input
               type="password"
-              placeholder="Create a strong password."
+              placeholder="Enter your password."
               value={input.password}
               name="password"
               onChange={changeEventHandler}

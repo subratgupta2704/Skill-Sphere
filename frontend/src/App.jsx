@@ -4,6 +4,7 @@ import Login from "./screens/Login";
 import Home from "./screens/Home";
 import Jobs from "./screens/Jobs";
 import Browse from "./screens/Browse";
+import Profile from "./screens/Profile";
 
 const appRouter = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/browse",
     element: <Browse />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 
