@@ -5,6 +5,7 @@ import Home from "./screens/Home";
 import Jobs from "./screens/Jobs";
 import Browse from "./screens/Browse";
 import Profile from "./screens/Profile";
+import JobDescription from "./screens/JobDescription";
 
 const appRouter = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/jobs",
     element: <Jobs />,
+  },
+  {
+    path: "/description/:id",
+    element: <JobDescription />,
   },
   {
     path: "/browse",
