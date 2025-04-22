@@ -13,19 +13,18 @@ export const register = async (req, res) => {
         success: false,
       });
 
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      folder: "Skill-Sphere/ProfileImage",
-      timeout: 60000, // 60 seconds
-    });
+    // const file = req.file;
+    // const fileUri = getDataUri(file);
+    // const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+    //   folder: "Skill-Sphere/ProfileImage",
+    //   timeout: 60000, // 60 seconds
+    // });
 
-    if(cloudResponse){
-      console.log("Cloudinary Response:", cloudResponse);
-      console.log("File Format:", cloudResponse.format); // Ensure it's 'pdf'
-      console.log("Secure URL:", cloudResponse.secure_url);
-    }
-    
+    // if (cloudResponse) {
+    //   console.log("Cloudinary Response:", cloudResponse);
+    //   console.log("File Format:", cloudResponse.format); // Ensure it's 'pdf'
+    //   console.log("Secure URL:", cloudResponse.secure_url);
+    // }
 
     const user = await User.findOne({ email });
     if (user)
@@ -42,9 +41,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
-      profile: {
-        profilePicture: cloudResponse.secure_url, //Save the URL of the uploaded file
-      },
+      // profile: {
+      //   profilePicture: cloudResponse.secure_url, //Save the URL of the uploaded file
+      // },
     });
 
     return res.status(201).json({
