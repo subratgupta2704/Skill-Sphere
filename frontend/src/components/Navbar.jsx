@@ -9,9 +9,34 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { User2, LogOut } from "lucide-react";
 import { useSelector } from "react-redux";
+import { USER_API_END_POINT } from "@/constants/constants";
+import axios from "axios";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "@/redux/authSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        dispatch(setUser(null));
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while logging out");
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -78,7 +103,9 @@ const Navbar = () => {
                     </div>
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <LogOut />
-                      <Button variant="link">Logout</Button>
+                      <Button variant="link" onClick={logoutHandler}>
+                        Logout
+                      </Button>
                     </div>
                   </div>
                 </div>
