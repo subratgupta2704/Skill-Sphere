@@ -13,6 +13,20 @@ export const register = async (req, res) => {
         success: false,
       });
 
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+      folder: "Skill-Sphere/ProfileImage",
+      timeout: 60000, // 60 seconds
+    });
+
+    if(cloudResponse){
+      console.log("Cloudinary Response:", cloudResponse);
+      console.log("File Format:", cloudResponse.format); // Ensure it's 'pdf'
+      console.log("Secure URL:", cloudResponse.secure_url);
+    }
+    
+
     const user = await User.findOne({ email });
     if (user)
       return res.status(400).json({
@@ -28,6 +42,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePicture: cloudResponse.secure_url, //Save the URL of the uploaded file
+      },
     });
 
     return res.status(201).json({
@@ -119,15 +136,13 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
     const fileUri = getDataUri(file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      resource_type: "auto", 
+      resource_type: "auto",
       folder: "Skill-Sphere/Resume",
     });
-
 
     console.log("Cloudinary Response:", cloudResponse);
     console.log("File Format:", cloudResponse.format); // Ensure it's 'pdf'
     console.log("Secure URL:", cloudResponse.secure_url);
-
 
     let skillsArray;
     if (skills) {
