@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/shared/Navbar";
+import Navbar from "../components/Navbar";
 import { Label } from "../components/ui/Label";
 import { Input } from "../components/ui/Input";
 import { RadioGroup } from "../components/ui/radio-group";

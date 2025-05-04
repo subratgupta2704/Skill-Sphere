@@ -6,8 +6,12 @@ import Jobs from "./screens/Jobs";
 import Browse from "./screens/Browse";
 import Profile from "./screens/Profile";
 import JobDescription from "./screens/JobDescription";
+import Companies from "./screens/Admin/Companies";
+import CompanyCreate from "./screens/Admin/CompanyCreate";
+import CompanySetup from "./screens/Admin/CompanySetup";
 
 const appRouter = createBrowserRouter([
+  // Routes for students
   {
     path: "/",
     element: <Home />,
@@ -35,6 +39,20 @@ const appRouter = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+
+  // Routes for recruiter
+  {
+    path: "/admin/companies",
+    element: <Companies />,
+  },
+  {
+    path: "/admin/companies/create",
+    element: <CompanyCreate />,
+  },
+  {
+    path: "/admin/companies/:id",
+    element: <CompanySetup />,
   },
 ]);
 

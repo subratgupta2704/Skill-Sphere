@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/shared/Navbar";
+import Navbar from "../components/Navbar";
 import { Label } from "../components/ui/Label";
 import { Input } from "../components/ui/Input";
 import { RadioGroup } from "../components/ui/radio-group";
@@ -30,7 +30,6 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
