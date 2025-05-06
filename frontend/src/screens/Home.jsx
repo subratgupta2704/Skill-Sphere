@@ -14,11 +14,13 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.role === "recruiter") {
+    if (!user) {
+      navigate("/");
+    } else if (user.role === "recruiter") {
       navigate("/admin/companies");
     }
-  }, []);
-   
+  }, [user, navigate]);
+
   return (
     <div>
       <Navbar />
