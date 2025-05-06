@@ -86,7 +86,10 @@ const Navbar = () => {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src={user?.profile?.profilePicture}
+                    src={
+                      user?.profile?.profilePicture ||
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oghbsuzggpkknQSSU-Ch_xep_9v3m6EeBQ&s"
+                    }
                     alt="@shadcn"
                   />
                 </Avatar>
@@ -96,7 +99,10 @@ const Navbar = () => {
                   <div className="flex gap-2 space-y-2">
                     <Avatar className="cursor-pointer">
                       <AvatarImage
-                        src={user?.profile?.profilePicture}
+                        src={
+                          user?.profile?.profilePicture ||
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oghbsuzggpkknQSSU-Ch_xep_9v3m6EeBQ&s"
+                        }
                         alt="@shadcn"
                       />
                     </Avatar>
