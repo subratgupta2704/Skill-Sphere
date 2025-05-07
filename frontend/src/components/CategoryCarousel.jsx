@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const category = [
   "Frontend Developer",
   "Backend Developer",
-  "Fullstack Developer",
+  "Full Stack Developer",
   "Data Scientist",
   "DevOps Engineer",
   "Machine Learning Engineer",
