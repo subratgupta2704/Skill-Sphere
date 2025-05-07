@@ -11,8 +11,9 @@ import { USER_API_END_POINT } from "../constants/constants";
 import { toast } from "sonner";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Loader2 } from "lucide-react"; 
+import { Loader2 } from "lucide-react";
 import { setLoading } from "../redux/authSlice";
+import { useEffect  } from "react";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -24,7 +25,7 @@ const Signup = () => {
     file: "",
   });
 
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -65,12 +66,16 @@ const Signup = () => {
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);
-    }
-    finally {
+    } finally {
       dispatch(setLoading(false));
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div>
       <Navbar />

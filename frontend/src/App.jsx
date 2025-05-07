@@ -12,6 +12,7 @@ import CompanySetup from "./screens/Admin/CompanySetup";
 import AdminJobs from "./screens/Admin/AdminJobs";
 import PostJob from "./screens/Admin/PostJob";
 import Applicants from "./screens/Admin/Applicants";
+import ProtectedRoute from "./screens/Admin/ProtectedRoute";
 
 const appRouter = createBrowserRouter([
   // Routes for students
@@ -47,27 +48,51 @@ const appRouter = createBrowserRouter([
   // Routes for recruiter
   {
     path: "/admin/companies",
-    element: <Companies />,
+    element: (
+      <ProtectedRoute>
+        <Companies />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/companies/create",
-    element: <CompanyCreate />,
+    element: (
+      <ProtectedRoute>
+        <CompanyCreate />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/companies/:id",
-    element: <CompanySetup />,
+    element: (
+      <ProtectedRoute>
+        <CompanySetup />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs",
-    element: <AdminJobs />,
+    element: (
+      <ProtectedRoute>
+        <AdminJobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs/create",
-    element: <PostJob />,
+    element: (
+      <ProtectedRoute>
+        <PostJob />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs/:id/applicants",
-    element: <Applicants />,
+    element: (
+      <ProtectedRoute>
+        <Applicants />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
