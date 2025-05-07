@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -70,6 +70,15 @@ const AdminJobsTable = () => {
                     >
                       <Edit2 className="w-4" />
                       <span>Edit</span>
+                    </div>
+                    <div
+                      onClick={() =>
+                        navigate(`/admin/jobs/${job._id}/applicants`)
+                      }
+                      className="flex items-center gap-2 w-fit cursor-pointer mt-2"
+                    >
+                      <Eye className="w-4" />
+                      <span>View</span>
                     </div>
                   </PopoverContent>
                 </Popover>
