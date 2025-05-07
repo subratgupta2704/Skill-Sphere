@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Contact, Mail, Pen } from "lucide-react";
-import React from "react";
+import React, { use } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
@@ -9,10 +9,12 @@ import AppliedJobsTable from "@/components/AppliedJobsTable";
 import { useState } from "react";
 import UpdateProfileDialog from "@/components/UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAllAppliedJobs from "@/hooks/useGetAllAppliedJobs";
 
 const isResume = true;
 
 const Profile = () => {
+  useGetAllAppliedJobs();
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
