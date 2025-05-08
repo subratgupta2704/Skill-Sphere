@@ -16,7 +16,9 @@ export const registerCompany = async (req, res) => {
     }
 
     // Check if company already exists
-    let company = await Company.findOne({ name: companyName });
+    let company = await Company.findOne({
+      name: { $regex: `^${companyName}$`, $options: "i" },
+    });
     if (company) {
       return res.status(400).json({
         message: "Company Already Exists.",
@@ -36,11 +38,18 @@ export const registerCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Internal Server Error.",
-      success: false,
-    });
+    if (error.response?.data?.message === "Company Already Exists.") {
+      return res.status(400).json({
+        message: "Company Already Exists.",
+        success: false,
+      });
+    } else {
+      console.error("Error while creating new company", error);
+      res.status(500).json({
+        message: "Internal Server Error.",
+        success: false,
+      });
+    }
   }
 };
 
@@ -103,16 +112,20 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
-    const file = req.file;
 
-    // Convert file buffer to data URI for Cloudinary upload
-    const fileUri = getDataUri(file);
+    let logo = null;
 
-    // Upload company logo to Cloudinary
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      folder: "Skill-Sphere/CompanyLogo",
-    });
-    const logo = cloudResponse.secure_url;
+    // Check if a file was uploaded
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+
+      // Upload company logo to Cloudinary
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        folder: "Skill-Sphere/CompanyLogo",
+      });
+
+      logo = cloudResponse.secure_url;
+    }
 
     // Prepare data to update
     const updateData = {
@@ -120,8 +133,11 @@ export const updateCompany = async (req, res) => {
       description,
       website,
       location,
-      logo,
     };
+
+    if (logo) {
+      updateData.logo = logo;
+    }
 
     // Find and update company by ID
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {

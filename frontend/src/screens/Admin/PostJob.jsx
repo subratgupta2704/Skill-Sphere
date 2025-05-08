@@ -49,6 +49,18 @@ const PostJob = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    const { position } = input;
+
+    // Only validate if value is present; otherwise let backend handle it
+    if (
+      position &&
+      (isNaN(parseInt(position, 10)) || parseInt(position, 10) <= 0)
+    ) {
+      toast.error("Please enter a valid number of positions.");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -64,7 +76,7 @@ const PostJob = () => {
       }
     } catch (error) {
       console.error("Error while posting job", error);
-      toast.error("Something went wrong!");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -185,9 +197,11 @@ const PostJob = () => {
               Please Wait
             </Button>
           ) : (
-            <Button type="submit" className="w-full my-4">
-              Post New Job
-            </Button>
+            <div>
+              <Button type="submit" className="w-full my-4">
+                Post New Job
+              </Button>
+            </div>
           )}
           {companies.length == 0 && (
             <p className="text-xs text-red-600 font-bold text-center my-3">

@@ -16,18 +16,17 @@ export const register = async (req, res) => {
         success: false,
       });
 
+    let imageURL = null;
+
     // Get uploaded image from request - user profile picture
-    const file = req.file;
-
-    // Convert file buffer to Data URI
-    const fileUri = getDataUri(file);
-
-    // Upload file to Cloudinary
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      resource_type: "auto",
-      folder: "Skill-Sphere/ProfileImage",
-    });
-
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+      const myCloud = await cloudinary.uploader.upload(fileUri.content, {
+        folder: "Skill-Sphere/ProfileImage",
+        resource_type: "image",
+      });
+      imageURL = myCloud.secure_url;
+    }
     // Check if user already exists
     const user = await User.findOne({ email });
     if (user)
@@ -47,7 +46,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
       profile: {
-        profilePicture: cloudResponse.secure_url, //Save the URL of the uploaded file
+        profilePicture: imageURL, //Save the URL of the uploaded file
       },
     });
 
@@ -156,33 +155,22 @@ export const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
 
-    // Get uploaded file from request
-    const file = req.file;
+    let resumeUrl = null;
+    let resumeOriginalName = null;
 
-    // Convert file buffer to Data URI
-    const fileUri = getDataUri(file);
-
-    // Upload file to Cloudinary
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      resource_type: "auto",
-      folder: "Skill-Sphere/Resume",
-    });
-
-    console.log("Cloudinary Response:", cloudResponse);
-    console.log("File Format:", cloudResponse.format); // Ensure it's 'pdf'
-    console.log("Secure URL:", cloudResponse.secure_url);
-
-    // Convert skills to array if provided
-    let skillsArray;
-    if (skills) {
-      skillsArray = skills.split(",");
+    // Upload resume to Cloudinary if present
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        resource_type: "auto",
+        folder: "Skill-Sphere/Resume",
+      });
+      resumeUrl = cloudResponse.secure_url;
+      resumeOriginalName = req.file.originalname;
     }
 
     const userId = req.id;
-
-    // Find user by ID
     let user = await User.findById(userId);
-
     if (!user) {
       return res.status(400).json({
         message: "User Not Found.",
@@ -190,33 +178,21 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    // Update user's profile fields if provided
-    if (fullName) {
-      user.fullName = fullName;
-    }
-    if (email) {
-      user.email = email;
-    }
-    if (phoneNumber) {
-      user.phoneNumber = phoneNumber;
-    }
-    if (bio) {
-      user.profile.bio = bio;
-    }
-    if (skillsArray) {
-      user.profile.skills = skillsArray;
+    // Update fields if provided
+    if (fullName) user.fullName = fullName;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skills.split(",");
+
+    if (resumeUrl) {
+      user.profile.resume = resumeUrl;
+      user.profile.resumeOriginalName = resumeOriginalName;
     }
 
-    // Save resume file URL and original name
-    if (cloudResponse && cloudResponse.secure_url) {
-      user.profile.resume = cloudResponse.secure_url; // Save the URL of the uploaded file
-      user.profile.resumeOriginalName = file.originalname; // Save the original name of the file
-    }
-
-    // Save updated user data
     await user.save();
 
-    // Prepare user object for response
+    // Sanitize response
     user = {
       _id: user._id,
       fullName: user.fullName,
@@ -232,7 +208,7 @@ export const updateProfile = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       message: "Internal Server Error",
       success: false,

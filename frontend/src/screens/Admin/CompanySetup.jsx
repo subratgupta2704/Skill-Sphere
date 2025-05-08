@@ -15,7 +15,7 @@ import useGetCompanyById from "@/hooks/useGetCompanyById";
 const CompanySetup = () => {
   const params = useParams();
   useGetCompanyById(params.id);
-  
+
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -85,18 +85,18 @@ const CompanySetup = () => {
     <div>
       <Navbar />
       <div className="max-w-xl mx-auto my-10">
+        <div className="flex items-center gap-5 p-8">
+          <Button
+            className="flex items-center gap-2 text-gray-500 font-semibold"
+            variant="outline"
+            onClick={() => navigate("/admin/companies")}
+          >
+            <ArrowLeft />
+            <span>Back</span>
+          </Button>
+          <h1 className="font-bold text-xl">Company Setup</h1>
+        </div>
         <form onSubmit={submitHandler}>
-          <div className="flex items-center gap-5 p-8">
-            <Button
-              className="flex items-center gap-2 text-gray-500 font-semibold"
-              variant="outline"
-              onClick={() => navigate("/admin/companies")}
-            >
-              <ArrowLeft />
-              <span>Back</span>
-            </Button>
-            <h1 className="font-bold text-xl">Company Setup</h1>
-          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Company Name</Label>
@@ -149,7 +149,7 @@ const CompanySetup = () => {
               Please Wait
             </Button>
           ) : (
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full my-4">
               Update
             </Button>
           )}

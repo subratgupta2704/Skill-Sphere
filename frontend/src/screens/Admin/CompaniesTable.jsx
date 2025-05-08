@@ -45,7 +45,11 @@ const CompaniesTable = () => {
   return (
     <div>
       <Table>
-        <TableCaption>A list of your recent registered companies</TableCaption>
+        {filterCompany.length > 0 && (
+          <TableCaption>
+            A list of your recent registered companies
+          </TableCaption>
+        )}
         <TableHeader>
           <TableRow>
             <TableHead>Logo</TableHead>
@@ -55,35 +59,46 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filterCompany.map((company) => (
-            <TableRow key={company._id}>
-              <TableCell>
-                <Avatar>
-                  <AvatarImage src={company.logo} />
-                </Avatar>
-              </TableCell>
-              <TableCell>{company.name}</TableCell>
-              <TableCell>{company.createdAt?.split("T")[0]}</TableCell>
-              <TableCell className="text-right cursor-pointer">
-                <Popover>
-                  <PopoverTrigger>
-                    <MoreHorizontal />
-                  </PopoverTrigger>
-                  <PopoverContent className="w-32">
-                    <div
-                      onClick={() =>
-                        navigate(`/admin/companies/${company._id}`)
-                      }
-                      className="flex items-center gap-2 w-fit cursor-pointer"
-                    >
-                      <Edit2 className="w-4" />
-                      <span>Edit</span>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+          {filterCompany.length <= 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={4}
+                className="text-center text-muted-foreground"
+              >
+                No Companies Found
               </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            filterCompany.map((company) => (
+              <TableRow key={company._id}>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage src={company.logo} />
+                  </Avatar>
+                </TableCell>
+                <TableCell>{company.name}</TableCell>
+                <TableCell>{company.createdAt?.split("T")[0]}</TableCell>
+                <TableCell className="text-right cursor-pointer">
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-32">
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/companies/${company._id}`)
+                        }
+                        className="flex items-center gap-2 w-fit cursor-pointer"
+                      >
+                        <Edit2 className="w-4" />
+                        <span>Edit</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>

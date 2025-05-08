@@ -18,6 +18,11 @@ const CompanyCreate = () => {
 
   const registerNewCompany = async () => {
     try {
+      if (!companyName) {
+        toast.error("Company name is required.");
+        return;
+      }
+
       const res = await axios.post(
         `${COMPANY_API_END_POINT}/register`,
         { companyName },
@@ -28,14 +33,15 @@ const CompanyCreate = () => {
           withCredentials: true,
         }
       );
-      if(res?.data?.success){
+      if (res?.data?.success) {
         dispatch(setSingleCompany(res?.data?.company));
         toast.success(res?.data?.message);
         const companyId = res?.data?.company?._id;
-        navigate(`/admin/companies/${companyId}`); 
+        navigate(`/admin/companies/${companyId}`);
       }
     } catch (error) {
-      console.error("Error while creating new company", error);
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   return (
