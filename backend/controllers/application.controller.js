@@ -1,10 +1,13 @@
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
 
+// Controller to apply for a job
 export const applyJob = async (req, res) => {
   try {
     const userId = req.id;
     const jobId = req.params.id;
+
+    // Validate if job ID is provided
     if (!jobId) {
       return res.status(400).json({
         message: "Job ID is required",
@@ -17,6 +20,7 @@ export const applyJob = async (req, res) => {
       job: jobId,
       applicant: userId,
     });
+
     if (existingApplication) {
       return res.status(400).json({
         message: "You have already applied for this job",
@@ -28,31 +32,41 @@ export const applyJob = async (req, res) => {
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({
-        message: "Job not found",
+        message: "Job Not Found",
         success: false,
       });
     }
+
     // Create a new application
     const newApplication = await Application.create({
       job: jobId,
       applicant: userId,
     });
 
+    // Add the application ID to the job's applications array
     job.applications.push(newApplication._id);
     await job.save();
+
     return res.status(201).json({
-      message: "Application submitted successfully",
+      message: "Application Submitted Successfully",
       success: true,
       application: newApplication,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
   }
 };
 
+// Controller to get all jobs the current user has applied to
 export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
+
+    // Find all applications by the user and populate job and company details
     const application = await Application.find({ applicant: userId })
       .sort({
         createdAt: -1,
@@ -66,26 +80,34 @@ export const getAppliedJobs = async (req, res) => {
         },
       });
 
+    // If no applications found
     if (!application) {
       return res.status(404).json({
-        message: "No applications found",
+        message: "No Applications Found",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Applications fetched successfully",
+      message: "Applications Fetched Successfully",
       success: true,
       application,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
   }
 };
 
+// Controller to get all applicants for a specific job
 export const getApplicants = async (req, res) => {
   try {
     const jobId = req.params.id;
+
+    // Find the job and populate the applications and applicant details
     const job = await Job.findById(jobId).populate({
       path: "applications",
       options: { sort: { createdAt: -1 } },
@@ -93,27 +115,35 @@ export const getApplicants = async (req, res) => {
         path: "applicant",
       },
     });
+
     if (!job) {
       return res.status(404).json({
-        message: "Job not found",
+        message: "Job Not Found",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Applicants fetched successfully",
+      message: "Applicants Fetched Successfully",
       success: true,
       job,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
   }
 };
 
+// Controller to update the status of a specific application
 export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const applicationId = req.params.id;
+
+    // Validate if status is provided
     if (!status) {
       return res.status(400).json({
         message: "Status is required",
@@ -121,25 +151,29 @@ export const updateStatus = async (req, res) => {
       });
     }
 
-    //Find the application by application ID
+    // Find the application by ID
     const application = await Application.findOne({ _id: applicationId });
     if (!application) {
       return res.status(404).json({
-        message: "Application not found",
+        message: "Application Not Found",
         success: false,
       });
     }
 
-    //Update the status of the application
+    // Update the application status
     application.status = status.toLowerCase();
     await application.save();
 
     return res.status(200).json({
-      message: "Application status updated successfully",
+      message: "Status Updated Successfully",
       success: true,
       application,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
   }
 };

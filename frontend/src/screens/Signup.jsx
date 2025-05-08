@@ -1,19 +1,16 @@
-import React, { use } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+import { USER_API_END_POINT } from "../constants/constants";
+import { setLoading } from "../redux/authSlice";
 import Navbar from "../components/Navbar";
 import { Label } from "../components/ui/Label";
 import { Input } from "../components/ui/Input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Button } from "../components/ui/Button";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { USER_API_END_POINT } from "../constants/constants";
-import { toast } from "sonner";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { Loader2 } from "lucide-react";
-import { setLoading } from "../redux/authSlice";
-import { useEffect  } from "react";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -60,8 +57,6 @@ const Signup = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/login");
-      } else {
-        toast.error("User registration failed");
       }
     } catch (error) {
       console.error(error);
@@ -133,8 +128,8 @@ const Signup = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="student"
-                  checked={input.role === "student"}
+                  value="Student"
+                  checked={input.role === "Student"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
@@ -144,8 +139,8 @@ const Signup = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="recruiter"
-                  checked={input.role === "recruiter"}
+                  value="Recruiter"
+                  checked={input.role === "Recruiter"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />

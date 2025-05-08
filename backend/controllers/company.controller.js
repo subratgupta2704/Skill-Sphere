@@ -2,9 +2,12 @@ import { Company } from "../models/company.model.js";
 import getDataUri from "../utils.js/datauri.js";
 import cloudinary from "../utils.js/cloudinary.js";
 
+// Controller to register a new company
 export const registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
+
+    // Validate input
     if (!companyName) {
       return res.status(400).json({
         message: "Company name is required.",
@@ -12,79 +15,106 @@ export const registerCompany = async (req, res) => {
       });
     }
 
+    // Check if company already exists
     let company = await Company.findOne({ name: companyName });
     if (company) {
       return res.status(400).json({
-        message: "Company already exists.",
+        message: "Company Already Exists.",
         success: false,
       });
     }
 
+    // Create new company
     company = await Company.create({
       name: companyName,
       userId: req.id,
     });
 
     return res.status(201).json({
-      message: "Company registered successfully.",
+      message: "Company Registered Successfully.",
       company,
       success: true,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error.",
+      success: false,
+    });
   }
 };
 
+// Controller to get companies registered by the logged-in user
 export const getCompany = async (req, res) => {
   try {
     const userId = req.id;
+
+    // Fetch all companies associated with the user
     const companies = await Company.find({ userId });
+
     if (!companies) {
       return res.status(404).json({
-        message: "No company found.",
+        message: "No Company Found.",
         success: false,
       });
     }
+
     return res.status(200).json({
       companies,
       success: true,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error.",
+      success: false,
+    });
   }
 };
 
+// Controller to get a specific company by ID
 export const getCompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
+
+    // Find company by ID
     const company = await Company.findById(companyId);
     if (!company) {
       return res.status(404).json({
-        message: "Company not found.",
+        message: "Company Not Found.",
         success: false,
       });
     }
+
     return res.status(200).json({
       company,
       success: true,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error.",
+      success: false,
+    });
   }
 };
 
+// Controller to update company details, including logo upload to Cloudinary
 export const updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
     const file = req.file;
 
-    //Cloudinary upload
+    // Convert file buffer to data URI for Cloudinary upload
     const fileUri = getDataUri(file);
+
+    // Upload company logo to Cloudinary
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
       folder: "Skill-Sphere/CompanyLogo",
     });
     const logo = cloudResponse.secure_url;
 
+    // Prepare data to update
     const updateData = {
       name,
       description,
@@ -93,22 +123,28 @@ export const updateCompany = async (req, res) => {
       logo,
     };
 
+    // Find and update company by ID
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
+
     if (!company) {
       return res.status(404).json({
-        message: "Company not found.",
+        message: "Company Not Found.",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Company info updated successfully.",
+      message: "Company Info Updated Successfully.",
       company,
       success: true,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error.",
+      success: false,
+    });
   }
 };

@@ -1,11 +1,9 @@
-import FilterCard from "@/components/FilterCard";
-import Navbar from "@/components/Navbar";
-import React, { useEffect } from "react";
-import Job from "@/components/Job";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Job from "@/components/Job";
+import FilterCard from "@/components/FilterCard";
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector((state) => state.job);

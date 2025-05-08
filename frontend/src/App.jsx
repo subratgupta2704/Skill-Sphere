@@ -15,7 +15,7 @@ import Applicants from "./screens/Admin/Applicants";
 import ProtectedRoute from "./screens/Admin/ProtectedRoute";
 
 const appRouter = createBrowserRouter([
-  // Routes for students
+  // Routes for Students
   {
     path: "/",
     element: <Home />,
@@ -45,7 +45,7 @@ const appRouter = createBrowserRouter([
     element: <Profile />,
   },
 
-  // Routes for recruiter
+  // Routes for Recruiter
   {
     path: "/admin/companies",
     element: (

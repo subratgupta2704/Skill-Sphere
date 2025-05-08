@@ -1,5 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { toast } from "sonner";
 import {
   Popover,
   PopoverTrigger,
@@ -8,13 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { User2, LogOut } from "lucide-react";
-import { useSelector } from "react-redux";
-import { USER_API_END_POINT } from "@/constants/constants";
-import axios from "axios";
-import { toast } from "sonner";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setUser } from "@/redux/authSlice";
+import { USER_API_END_POINT } from "@/constants/constants";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -34,7 +32,7 @@ const Navbar = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong while logging out");
+      toast.error(error.response.data.message);
     }
   };
   return (
@@ -47,7 +45,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            {user && user.role === "recruiter" ? (
+            {user && user.role === "Recruiter" ? (
               <>
                 <li>
                   <Link to="/admin/companies">Companies</Link>
@@ -114,7 +112,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="flex flex-col my-2 text-gray-600">
-                    {user && user.role === "student" && (
+                    {user && user.role === "Student" && (
                       <div className="flex w-fit items-center gap-2 cursor-pointer">
                         <User2 />
                         <Button variant="link">

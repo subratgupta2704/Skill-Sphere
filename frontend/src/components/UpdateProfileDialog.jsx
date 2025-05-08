@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,11 +9,9 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { USER_API_END_POINT } from "@/constants/constants";
 import { setUser } from "@/redux/authSlice";
@@ -76,6 +74,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

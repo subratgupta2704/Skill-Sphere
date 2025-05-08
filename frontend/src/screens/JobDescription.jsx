@@ -1,16 +1,16 @@
-import React, { use } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { JOB_API_END_POINT } from "../constants/constants";
-import { useDispatch } from "react-redux";
-import { setSingleJob } from "../redux/jobSlice";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import { APPLICATION_API_END_POINT } from "../constants/constants";
-import { useState } from "react";
+import { setSingleJob } from "../redux/jobSlice";
+
+import {
+  JOB_API_END_POINT,
+  APPLICATION_API_END_POINT,
+} from "../constants/constants";
 
 const JobDescription = () => {
   const { singleJob } = useSelector((state) => state.job);
@@ -47,7 +47,7 @@ const JobDescription = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong!");
+      toast.error(error.response.data.message);
     }
   };
 

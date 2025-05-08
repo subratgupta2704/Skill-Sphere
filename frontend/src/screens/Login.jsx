@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+import { USER_API_END_POINT } from "../constants/constants";
+import { setLoading, setUser } from "../redux/authSlice";
 import Navbar from "../components/Navbar";
 import { Label } from "../components/ui/Label";
 import { Input } from "../components/ui/Input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Button } from "../components/ui/Button";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { USER_API_END_POINT } from "../constants/constants";
-import { toast } from "sonner";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { Loader2 } from "lucide-react";
-import { setLoading } from "../redux/authSlice";
-import { setUser } from "../redux/authSlice";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -42,11 +40,10 @@ const Login = () => {
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");
-      } else {
-        toast.error("User login failed");
       }
     } catch (error) {
       console.error("Error while logging in user", error);
+      toast.error(error.response.data.message);
     } finally {
       dispatch(setLoading(false));
     }
@@ -92,8 +89,8 @@ const Login = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="student"
-                  checked={input.role === "student"}
+                  value="Student"
+                  checked={input.role === "Student"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
@@ -103,8 +100,8 @@ const Login = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="recruiter"
-                  checked={input.role === "recruiter"}
+                  value="Recruiter"
+                  checked={input.role === "Recruiter"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
