@@ -1,6 +1,8 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 
 const LatesJobCards = ({ job }) => {
   const navigate = useNavigate();
@@ -10,6 +12,11 @@ const LatesJobCards = ({ job }) => {
       onClick={() => navigate(`/description/${job?._id}`)}
       className="p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer"
     >
+      <Button variant="outline" className="p-6" size="icon">
+        <Avatar>
+          <AvatarImage src={job?.company?.logo} />
+        </Avatar>
+      </Button>
       <div>
         <h1 className="font-medium text-lg">{job?.company?.name}</h1>
         <p className="text-sm text-gray-500">India</p>

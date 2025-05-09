@@ -13,6 +13,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { User2, LogOut } from "lucide-react";
 import { setUser } from "@/redux/authSlice";
 import { USER_API_END_POINT } from "@/constants/constants";
+import { clearSearchedQuery } from "@/redux/jobSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -35,6 +36,7 @@ const Navbar = () => {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -43,7 +45,7 @@ const Navbar = () => {
             Skill<span className="text-[#F83002]">Sphere</span>
           </h1>
         </div>
-        <div className="flex items-center gap-12">
+        <div className="flex items-center gap-10">
           <ul className="flex font-medium items-center gap-5">
             {user && user.role === "Recruiter" ? (
               <>
@@ -69,7 +71,7 @@ const Navbar = () => {
             )}
           </ul>
           {!user ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <Link to="/login">
                 <Button variant="outline">Login</Button>
               </Link>
@@ -92,7 +94,7 @@ const Navbar = () => {
                   />
                 </Avatar>
               </PopoverTrigger>
-              <PopoverContent className="w-80">
+              <PopoverContent className="w-50">
                 <div>
                   <div className="flex gap-2 space-y-2">
                     <Avatar className="cursor-pointer">
@@ -113,7 +115,7 @@ const Navbar = () => {
                   </div>
                   <div className="flex flex-col my-2 text-gray-600">
                     {user && user.role === "Student" && (
-                      <div className="flex w-fit items-center gap-2 cursor-pointer">
+                      <div className="flex w-fit items-center cursor-pointer">
                         <User2 />
                         <Button variant="link">
                           <Link to="/profile">View profile</Link>
@@ -121,7 +123,7 @@ const Navbar = () => {
                       </div>
                     )}
 
-                    <div className="flex w-fit items-center gap-2 cursor-pointer">
+                    <div className="flex w-fit items-center cursor-pointer">
                       <LogOut />
                       <Button variant="link" onClick={logoutHandler}>
                         Logout

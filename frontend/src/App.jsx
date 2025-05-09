@@ -86,6 +86,7 @@ const appRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  
   {
     path: "/admin/jobs/:id/applicants",
     element: (

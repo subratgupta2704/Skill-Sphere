@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { JOB_API_END_POINT } from "../constants/constants";
 import { setAllJobs } from "../redux/jobSlice";
 
+
 const useGetAllJobs = () => {
   const dispatch = useDispatch();
   const { searchedQuery } = useSelector((store) => store.job);

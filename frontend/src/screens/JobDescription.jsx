@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
 import { setSingleJob } from "../redux/jobSlice";
-
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   JOB_API_END_POINT,
   APPLICATION_API_END_POINT,
@@ -15,6 +16,7 @@ import {
 const JobDescription = () => {
   const { singleJob } = useSelector((state) => state.job);
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const isInitiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant == user?._id
@@ -75,6 +77,27 @@ const JobDescription = () => {
 
   return (
     <div className="max-w-7xl mx-auto my-10">
+      <div className="flex items-center justify-between mb-5">
+        <Button
+          className="flex items-center gap-2 text-gray-600 font-semibold"
+          variant="outline"
+          onClick={() => navigate("/jobs")}
+        >
+          <ArrowLeft />
+          <span>Back</span>
+        </Button>
+        <Button
+          onClick={isApplied ? null : applyJobHandler}
+          disabled={isApplied}
+          className={`rounded-lg ${
+            isApplied
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-[#7209b7] hover:bg-[#5f32ad]"
+          }`}
+        >
+          {isApplied ? "Already Applied" : "Apply Now"}
+        </Button>
+      </div>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-bold text-xl">{singleJob?.title}</h1>
@@ -90,21 +113,16 @@ const JobDescription = () => {
             </Badge>
           </div>
         </div>
-        <Button
-          onClick={isApplied ? null : applyJobHandler}
-          disabled={isApplied}
-          className={`rounded-lg ${
-            isApplied
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-[#7209b7] hover:bg-[#5f32ad]"
-          }`}
-        >
-          {isApplied ? "Already Applied" : "Apply Now"}
-        </Button>
       </div>
-      <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
-        Job Description
-      </h1>
+      <div className="flex items-center justify-between gap-2 mt-4 border-b-2 border-b-gray-300">
+        <h1 className=" font-medium py-4">Job Description</h1>
+        <h1 className="font-medium">
+          Posted on:
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.createdAt.split("T")[0]}
+          </span>
+        </h1>
+      </div>
       <div className="my-4">
         <h1 className="font-bold my-1">
           Role:
@@ -140,12 +158,6 @@ const JobDescription = () => {
           Total Applicants:
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.applications.length}
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Posted on:
-          <span className="pl-2 font-normal text-gray-800">
-            {singleJob?.createdAt.split("T")[0]}
           </span>
         </h1>
       </div>

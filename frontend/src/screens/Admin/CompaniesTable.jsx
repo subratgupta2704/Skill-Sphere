@@ -52,8 +52,8 @@ const CompaniesTable = () => {
         )}
         <TableHeader>
           <TableRow>
-            <TableHead>Logo</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead>Company Logo</TableHead>
+            <TableHead>Company Name</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>

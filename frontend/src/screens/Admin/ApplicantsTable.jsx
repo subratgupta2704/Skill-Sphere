@@ -42,7 +42,11 @@ const ApplicantsTable = () => {
   return (
     <div>
       <Table>
-        <TableCaption>A list of your recent applied candidates</TableCaption>
+        {applicants?.applications?.length > 0 ? (
+          <TableCaption>A list of your recent applied candidates</TableCaption>
+        ) : (
+          <TableCaption>No applicants found</TableCaption>
+        )}
         <TableHeader>
           <TableRow>
             <TableHead>FullName</TableHead>
