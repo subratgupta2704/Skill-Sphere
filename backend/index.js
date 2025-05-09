@@ -25,7 +25,7 @@ app.use(cookieParser()); // Parse cookies from requests
 
 // CORS configuration to allow requests from a specific frontend
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://skill-sphere-0y9a.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOptions));
