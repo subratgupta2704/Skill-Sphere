@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
-import React, { useEffect, useState } from "react";
-import { Label } from "@/components/ui/Label";
+import React, {  useState } from "react";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { JOB_API_END_POINT } from "@/constants/constants";
 import { toast } from "sonner";

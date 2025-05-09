@@ -7,10 +7,10 @@ import { Loader2 } from "lucide-react";
 import { USER_API_END_POINT } from "../constants/constants";
 import { setLoading, setUser } from "../redux/authSlice";
 import Navbar from "../components/Navbar";
-import { Label } from "../components/ui/Label";
-import { Input } from "../components/ui/Input";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/ui/button";
 
 const Login = () => {
   const [input, setInput] = useState({

@@ -10,7 +10,6 @@ import {
 } from "./ui/table";
 import { Badge } from "./ui/badge";
 import { useSelector } from "react-redux";
-import { all } from "axios";
 
 const AppliedJobsTable = () => {
   const { allAppliedJobs } = useSelector((store) => store.job);
