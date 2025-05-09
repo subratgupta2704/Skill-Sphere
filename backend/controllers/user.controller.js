@@ -162,9 +162,8 @@ export const updateProfile = async (req, res) => {
     // Upload resume to Cloudinary if present
     if (resumeFile) {
       const fileUri = getDataUri(resumeFile);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
         folder: "Skill-Sphere/Resume",
-        resource_type: "raw",
       });
       resumeUrl = cloudResponse.secure_url;
       resumeName = resumeFile.originalname;

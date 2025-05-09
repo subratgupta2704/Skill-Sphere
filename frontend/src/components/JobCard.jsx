@@ -5,14 +5,14 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
 
-const Job = ({ job }) => {
+// This component is used to display a job listing with details such as company name, job title, description, and other relevant information.
+const JobCard = ({ job }) => {
   const navigate = useNavigate();
 
-  const daysAgoFunction = (mongodbTime) => {
+  const getDaysAgoText = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentDate = new Date();
 
-    // Normalize both dates to midnight (start of day)
     const createdDate = new Date(
       createdAt.getFullYear(),
       createdAt.getMonth(),
@@ -25,17 +25,20 @@ const Job = ({ job }) => {
     );
 
     const timeDiff = currentDateOnly - createdDate;
-    return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+    if (days === 0) return "Today";
+    if (days === 1) return "1 day ago";
+    return `${days} days ago`;
   };
 
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 ">
       <div className="flex itens-center justify-between">
         <p className="text-sm text-gray-500">
-          {daysAgoFunction(job?.createdAt) == 0
-            ? "Today"
-            : `${daysAgoFunction(job?.createdAt)} Days ago`}{" "}
+          {getDaysAgoText(job?.createdAt)}
         </p>
+
         <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
         </Button>
@@ -57,8 +60,9 @@ const Job = ({ job }) => {
       </div>
       <div className="flex -tems-center gap-2 mt-4">
         <Badge className="text-blue-700 font-bold" variant="ghost">
-          {job?.position} Positions{" "}
+          {job?.position} {job?.position === 1 ? "Position" : "Positions"}
         </Badge>
+
         <Badge className="text-[#F83002] font-bold" variant="ghost">
           {job?.jobType}{" "}
         </Badge>
@@ -79,4 +83,4 @@ const Job = ({ job }) => {
   );
 };
 
-export default Job;
+export default JobCard;

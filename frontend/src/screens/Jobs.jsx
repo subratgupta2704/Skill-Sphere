@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import Job from "@/components/Job";
+import JobCard from "@/components/JobCard";
 import FilterCard from "@/components/FilterCard";
 
 const Jobs = () => {
@@ -51,7 +51,7 @@ const Jobs = () => {
                     transition={{ duration: 0.3 }}
                     key={job?._id}
                   >
-                    <Job job={job} />
+                    <JobCard job={job} />
                   </motion.div>
                 ))}
               </div>
