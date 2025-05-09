@@ -54,6 +54,7 @@ const ApplicantsTable = () => {
             <TableHead>Contact</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Resume</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -76,6 +77,16 @@ const ApplicantsTable = () => {
                   ) : (
                     <span>NA</span>
                   )}
+                </TableCell>
+                <TableCell>
+                  <TableCell>
+                    {item.status?.toLowerCase() === "pending" || !item.status
+                      ? "Pending"
+                      : `Updated - ${
+                          item.status.charAt(0).toUpperCase() +
+                          item.status.slice(1)
+                        }`}
+                  </TableCell>
                 </TableCell>
                 <TableCell className="text-right">
                   <Popover>

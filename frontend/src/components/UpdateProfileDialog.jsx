@@ -36,11 +36,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
-    if (file && file.type !== "application/pdf") {
-      toast.error("Please upload a valid PDF file.");
-      return;
-    }
-    setInput({ ...input, file: file });
+    // if (file && file.type !== "application/pdf") {
+    //   toast.error("Please upload a valid PDF file.");
+    //   return;
+    // }
+    setInput({ ...input, file });
   };
 
   const submitHandler = async (e) => {

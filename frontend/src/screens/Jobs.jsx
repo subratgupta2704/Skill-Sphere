@@ -18,7 +18,8 @@ const Jobs = () => {
             .toLowerCase()
             .includes(searchedQuery.toLowerCase()) ||
           job.location.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-          job.description.toLowerCase().includes(searchedQuery.toLowerCase())
+          job.description.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+          job.jobType.toLowerCase().includes(searchedQuery.toLowerCase())
         );
       });
       setFilterJobs(filteredJobs);

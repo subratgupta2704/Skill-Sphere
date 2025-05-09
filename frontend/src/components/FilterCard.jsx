@@ -4,7 +4,6 @@ import { Label } from "./ui/label";
 import { useDispatch } from "react-redux";
 import { setSearchedQuery } from "@/redux/jobSlice";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 
 const filterData = [
   {
@@ -21,8 +20,8 @@ const filterData = [
     ],
   },
   {
-    filterType: "Salary",
-    array: ["0-50K", "51K-1Lakh", "1-2Lakh"],
+    filterType: "Job Type",
+    array: ["Internship", "Full-Time", "Part-Time", "Contract"],
   },
 ];
 

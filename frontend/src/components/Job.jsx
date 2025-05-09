@@ -11,9 +11,23 @@ const Job = ({ job }) => {
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentDate = new Date();
-    const timeDiff = currentDate - createdAt;
+
+    // Normalize both dates to midnight (start of day)
+    const createdDate = new Date(
+      createdAt.getFullYear(),
+      createdAt.getMonth(),
+      createdAt.getDate()
+    );
+    const currentDateOnly = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
+    const timeDiff = currentDateOnly - createdDate;
     return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   };
+
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 ">
       <div className="flex itens-center justify-between">
