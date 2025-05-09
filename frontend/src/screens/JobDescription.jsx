@@ -36,7 +36,6 @@ const JobDescription = () => {
           withCredentials: true,
         }
       );
-      console.log(res.data);
 
       if (res.data.success) {
         setIsApplied(true);

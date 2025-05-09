@@ -14,8 +14,6 @@ const useGetAllAppliedJobs = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          console.log("Applied Jobs Data:", res.data.application);
-
           dispatch(setAllAppliedJobs(res.data.application));
         }
       } catch (error) {
