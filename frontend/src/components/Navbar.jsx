@@ -13,7 +13,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { User2, LogOut } from "lucide-react";
 import { setUser } from "@/redux/authSlice";
 import { USER_API_END_POINT } from "@/constants/constants";
-import { clearSearchedQuery } from "@/redux/jobSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);

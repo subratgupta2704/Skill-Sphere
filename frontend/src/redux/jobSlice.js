@@ -29,9 +29,6 @@ const jobSlice = createSlice({
     setSearchedQuery: (state, action) => {
       state.searchedQuery = action.payload;
     },
-    clearSearchedQuery: (state) => {
-      state.searchedQuery = "";
-    },
   },
 });
 
@@ -42,7 +39,6 @@ export const {
   setSearchJobByText,
   setAllAppliedJobs,
   setSearchedQuery,
-  clearSearchedQuery,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

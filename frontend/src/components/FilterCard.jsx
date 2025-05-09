@@ -27,16 +27,16 @@ const filterData = [
 
 const FilterCard = () => {
   const [selectedValue, setSelectedValue] = useState("");
-  const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
   const dispatch = useDispatch();
 
   const handleValueChange = (value) => {
     setSelectedValue(value);
   };
 
-  useEffect(() => {
-    dispatch(setSearchedQuery(searchInput));
-  }, [searchInput]);
+  // useEffect(() => {
+  //   dispatch(setSearchedQuery(searchInput));
+  // }, [searchInput]);
 
   useEffect(() => {
     dispatch(setSearchedQuery(selectedValue));
@@ -46,13 +46,13 @@ const FilterCard = () => {
     <div className="w-full bg-white p-3 rounded-md">
       <h1 className="font-bold text-xl">Filter Jobs </h1>
       <hr className="my-2 " />
-      <Input
+      {/* <Input
         name="search"
         type="text"
         placeholder="Search"
         onChange={(e) => setSearchInput(e.target.value)}
         value={searchInput}
-      />
+      /> */}
       <RadioGroup onValueChange={handleValueChange} value={selectedValue}>
         {filterData.map((data, index1) => (
           <div key={index1} className="mt-4">
