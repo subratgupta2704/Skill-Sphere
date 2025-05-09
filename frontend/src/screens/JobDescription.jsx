@@ -100,7 +100,9 @@ const JobDescription = () => {
       </div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-bold text-xl">{singleJob?.title}</h1>
+          <h1 className="font-bold text-xl">
+            {singleJob?.company?.name} - {singleJob?.title}
+          </h1>
           <div className="flex items-center gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="ghost">
               {singleJob?.position} Positions
@@ -125,37 +127,51 @@ const JobDescription = () => {
       </div>
       <div className="my-4">
         <h1 className="font-bold my-1">
-          Role:
+          Role :
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.title}
           </span>
         </h1>
         <h1 className="font-bold my-1">
-          Location:
+          Location :
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.location}
           </span>
         </h1>
         <h1 className="font-bold my-1">
-          Description:
+          Job Description :
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.description}
           </span>
         </h1>
         <h1 className="font-bold my-1">
-          Experience:
+          Experience :
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.experienceLevel}
           </span>
         </h1>
         <h1 className="font-bold my-1">
-          Salary:{" "}
+          Salary :{" "}
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.salary} LPA
           </span>
         </h1>
         <h1 className="font-bold my-1">
-          Total Applicants:
+          Website:
+          <span className="pl-2 font-normal text-gray-800">
+            <a
+              href={singleJob?.company?.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500"
+            >
+              {singleJob?.company?.website}
+            </a>
+          </span>
+        </h1>
+
+        <h1 className="font-bold my-1">
+          Total Applicants :
           <span className="pl-2 font-normal text-gray-800">
             {singleJob?.applications.length}
           </span>

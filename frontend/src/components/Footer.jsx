@@ -1,4 +1,10 @@
 import React from "react";
+import { toast } from "sonner";
+
+const handleClick = (e) => {
+  e.preventDefault();
+  toast.error("Job subscription is coming soon! Stay tuned for updates.");
+};
 
 const Footer = () => {
   return (
@@ -16,6 +22,7 @@ const Footer = () => {
               className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
             />
             <button
+              onClick={handleClick}
               type="submit"
               className="bg-[#6A38C2] text-white px-4 py-2 rounded-md hover:bg-[#5b30a6] transition"
             >
