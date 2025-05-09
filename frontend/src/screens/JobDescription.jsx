@@ -163,7 +163,7 @@ const JobDescription = () => {
               href={singleJob?.company?.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500"
+              className="text-blue-700"
             >
               {singleJob?.company?.website}
             </a>
