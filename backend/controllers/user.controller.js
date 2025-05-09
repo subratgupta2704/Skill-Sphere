@@ -154,20 +154,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
-
-    let resumeUrl = null;
-    let resumeName = null;
-    const resumeFile = req.file;
-
-    // Upload resume to Cloudinary if present
-    if (resumeFile) {
-      const fileUri = getDataUri(resumeFile);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-        folder: "Skill-Sphere/Resume",
-      });
-      resumeUrl = cloudResponse.secure_url;
-      resumeName = resumeFile.originalname;
-    }
+    const file = req.file;
 
     const userId = req.id;
     let user = await User.findById(userId);
@@ -185,9 +172,14 @@ export const updateProfile = async (req, res) => {
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skills.split(",");
 
-    if (resumeUrl) {
-      user.profile.resume = resumeUrl;
-      user.profile.resumeOriginalName = resumeName;
+    // Upload resume if file is provided
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      if (cloudResponse) {
+        user.profile.resume = cloudResponse.secure_url;
+        user.profile.resumeOriginalName = file.originalname;
+      }
     }
 
     await user.save();
