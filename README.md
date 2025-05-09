@@ -3,16 +3,15 @@
 Skill Sphere is a modern and responsive job portal web application where users can explore job listings from various companies, filter opportunities based on preferences, and apply with ease. Employers can also post job vacancies and manage listings, creating a dynamic ecosystem for both job seekers and recruiters.
 
 ## 🌟 Features
+- 📱 Fully responsive design for all devices
+- 🔎 Search and filter jobs by role, company, location, and experience
+- 📝 Apply for jobs with resume upload support (via Cloudinary)
+- 🏢 Employer dashboard to post and manage job listings
+- 🔐 JWT-based authentication and authorization
+- 🌐 Manual location entry for better control and accuracy
+- 🗃️ Redux Toolkit for scalable and predictable state management
+- 💾 Job data stored in MongoDB, ensuring reliability and scalability
 
-📱 Fully responsive design for all devices
-🔎 Search and filter jobs by role, company, location, and experience
-📝 Apply for jobs with resume upload support (via Cloudinary)
-🏢 Employer dashboard to post and manage job listings
-🔐 JWT-based authentication and authorization
-🌐 Manual location entry for better control and accuracy
-🗃️ Redux Toolkit for scalable and predictable state management
-💾 Job data stored in MongoDB, ensuring reliability and scalability
-  
 ## ⚙️ Tech Stack
 
 - **Frontend:**
