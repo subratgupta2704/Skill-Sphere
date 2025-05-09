@@ -14,7 +14,7 @@ Skill Sphere is a modern and responsive job portal web application where users c
 
 ## ⚙️ Tech Stack
 
-- **Frontend:**
+- **Frontend :-**
   - React JS
   - Tailwind CSS
   - shadcn/ui 
@@ -22,7 +22,7 @@ Skill Sphere is a modern and responsive job portal web application where users c
   - Redux Toolkit (for state management)
   - Axios
 
-- **Backend:**
+- **Backend :-**
   - Node.js (with Express)
   - MongoDB (with Mongoose)
   - Bcryptjs (for password hashing)
