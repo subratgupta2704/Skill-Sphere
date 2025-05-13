@@ -12,7 +12,7 @@ Skill Sphere is a modern and responsive job portal web application where users c
 - 🗃️ Redux Toolkit for scalable and predictable state management
 - 💾 Job data stored in MongoDB, ensuring reliability and scalability
 
-## ⚙️ Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend :-**
   - React JS
