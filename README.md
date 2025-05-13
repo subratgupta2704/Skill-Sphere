@@ -36,7 +36,7 @@ Skill Sphere is a modern and responsive job portal web application where users c
 
 ### Installation
 
-To get the project up and running, follow these steps:
+To get the project up and running, follow these steps :-
 
 1. Clone the repository to your local machine.
   
